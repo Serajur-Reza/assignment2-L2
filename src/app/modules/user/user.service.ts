@@ -7,7 +7,7 @@ const getUsers = async () => {
 };
 
 const getSingleUser = async (id: string) => {
-  const result = await User.findOne({ id });
+  const result = await User.findOne({ userId: Number(id) });
   return result;
 };
 
@@ -18,12 +18,15 @@ const createUser = async (user: TUser) => {
 };
 
 const editUser = async (id: string, data: object) => {
-  const result = await User.findOneAndUpdate({ id }, data);
+  const result = await User.findOneAndUpdate({ userId: Number(id) }, data, {
+    new: true,
+  });
+  console.log(result);
   return result;
 };
 
 const deleteUser = async (id: string) => {
-  const result = await User.deleteOne({ id });
+  const result = await User.deleteOne({ userId: Number(id) });
   return result;
 };
 

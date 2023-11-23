@@ -16,7 +16,7 @@ const getAllUsersController = async (req: Request, res: Response) => {
       message: "failed to retrive users",
       error: {
         code: 404,
-        description: "failed to retrive users",
+        description: (err as Error)?.message as string,
       },
     });
   }
@@ -37,7 +37,7 @@ const getSingleUserController = async (req: Request, res: Response) => {
       message: "failed to retrive user",
       error: {
         code: 404,
-        description: "failed to retrive user",
+        description: (err as Error)?.message as string,
       },
     });
   }
@@ -58,7 +58,7 @@ const createUserController = async (req: Request, res: Response) => {
       message: "failed to create user",
       error: {
         code: 404,
-        description: "failed to create user",
+        description: (err as Error)?.message as string,
       },
     });
   }
@@ -66,7 +66,7 @@ const createUserController = async (req: Request, res: Response) => {
 
 const editUserController = async (req: Request, res: Response) => {
   try {
-    const result = userServices.editUser(req.params.id, req.body);
+    const result = await userServices.editUser(req.params.userId, req.body);
 
     res.status(200).json({
       success: true,
@@ -79,7 +79,7 @@ const editUserController = async (req: Request, res: Response) => {
       message: "failed to edit user",
       error: {
         code: 404,
-        description: "failed to edit user",
+        description: (err as Error)?.message as string,
       },
     });
   }
@@ -87,7 +87,7 @@ const editUserController = async (req: Request, res: Response) => {
 
 const deleteUserController = async (req: Request, res: Response) => {
   try {
-    const result = userServices.deleteUser(req.params.id);
+    const result = await userServices.deleteUser(req.params.userId);
     res.status(200).json({
       success: true,
       message: "User deleted successfully!",
@@ -99,7 +99,7 @@ const deleteUserController = async (req: Request, res: Response) => {
       message: "failed to delete user",
       error: {
         code: 404,
-        description: "failed to delete user",
+        description: (err as Error)?.message as string,
       },
     });
   }

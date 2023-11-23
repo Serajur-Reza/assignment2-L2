@@ -1,4 +1,6 @@
 import { Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const fullNameSchema = new Schema({
   firstName: { type: String, required: true },
@@ -27,7 +29,17 @@ const userSchema = new Schema({
   isActive: { type: Boolean, required: true },
   hobbies: [{ type: String, required: true }],
   address: { type: addressSchema, required: true },
-  orders: { type: ordersSchema, required: true },
+  orders: [{ type: ordersSchema }],
+});
+
+userSchema.pre("save", async function (next) {
+  const data = this;
+  data.password = await bcrypt.hash(
+    data.password,
+    Number(config.bcrypt_salt_rounds)
+  );
+
+  next();
 });
 
 export const User = model("User", userSchema);

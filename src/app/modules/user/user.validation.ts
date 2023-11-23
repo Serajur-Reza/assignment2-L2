@@ -24,7 +24,7 @@ const UserValidator = z.object({
   fullName: FullNameValidator,
   hobbies: z.string().array(),
   age: z.number(),
-  email: z.string().min(3),
+  email: z.string().email(),
   isActive: z.boolean().default(false),
   address: AddressValidator,
   orders: OrderValidator,
