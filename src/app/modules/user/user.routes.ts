@@ -9,4 +9,8 @@ route.post("/", userControllers.createUserController);
 route.put("/:userId", userControllers.editUserController);
 route.delete("/:userId", userControllers.deleteUserController);
 
+route.put("/:userId/orders", userControllers.getAllUsersController);
+route.get("/:userId/orders", userControllers.getAllUsersController);
+route.get("/:userId/orders/total-price", userControllers.getAllUsersController);
+
 export const UserRoutes = route;

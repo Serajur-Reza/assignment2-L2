@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import config from "../../config";
+import { TUser, UserModel } from "./user.interface";
 
 const fullNameSchema = new Schema({
   firstName: { type: String, required: true },
@@ -32,6 +33,11 @@ const userSchema = new Schema({
   orders: [{ type: ordersSchema }],
 });
 
+userSchema.static("isUserExists", async function (id: string) {
+  const user = User.findOne({ userId: id });
+  return user;
+});
+
 userSchema.pre("save", async function (next) {
   const data = this;
   data.password = await bcrypt.hash(
@@ -42,4 +48,4 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-export const User = model("User", userSchema);
+export const User = model<TUser, UserModel>("User", userSchema);

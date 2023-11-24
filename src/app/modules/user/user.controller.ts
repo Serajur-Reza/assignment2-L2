@@ -105,10 +105,73 @@ const deleteUserController = async (req: Request, res: Response) => {
   }
 };
 
+const addOrderController = async (req: Request, res: Response) => {
+  try {
+    const result = await userServices.addOrder(req.params.userId);
+    res.status(200).json({
+      success: true,
+      message: "Order created successfully!",
+      data: result,
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: "failed to add order",
+      error: {
+        code: 404,
+        description: (err as Error)?.message as string,
+      },
+    });
+  }
+};
+
+const allOrdersController = async (req: Request, res: Response) => {
+  try {
+    const result = await userServices.allOrders(req.params.userId);
+    res.status(200).json({
+      success: true,
+      message: "Order fetched successfully!",
+      data: result,
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: "failed to retrieve order",
+      error: {
+        code: 404,
+        description: (err as Error)?.message as string,
+      },
+    });
+  }
+};
+
+const totalPriceController = async (req: Request, res: Response) => {
+  try {
+    const result = await userServices.totalPrice(req.params.userId);
+    res.status(200).json({
+      success: true,
+      message: "Total price calculated successfully!",
+      data: result,
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: "failed to total price",
+      error: {
+        code: 404,
+        description: (err as Error)?.message as string,
+      },
+    });
+  }
+};
+
 export const userControllers = {
   getAllUsersController,
   getSingleUserController,
   createUserController,
   editUserController,
   deleteUserController,
+  addOrderController,
+  allOrdersController,
+  totalPriceController,
 };
