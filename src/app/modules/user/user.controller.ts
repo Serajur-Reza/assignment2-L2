@@ -107,11 +107,11 @@ const deleteUserController = async (req: Request, res: Response) => {
 
 const addOrderController = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.addOrder(req.params.userId);
+    await userServices.addOrder(req.params.userId, req.body);
     res.status(200).json({
       success: true,
       message: "Order created successfully!",
-      data: result,
+      data: null,
     });
   } catch (err) {
     res.status(404).json({
@@ -127,11 +127,11 @@ const addOrderController = async (req: Request, res: Response) => {
 
 const allOrdersController = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.allOrders(req.params.userId);
+    const result = await userServices.getSingleUser(req.params.userId);
     res.status(200).json({
       success: true,
       message: "Order fetched successfully!",
-      data: result,
+      data: { orders: result?.orders },
     });
   } catch (err) {
     res.status(404).json({
@@ -148,10 +148,16 @@ const allOrdersController = async (req: Request, res: Response) => {
 const totalPriceController = async (req: Request, res: Response) => {
   try {
     const result = await userServices.totalPrice(req.params.userId);
+    let sum = 0;
+    for (let i = 0; i < result.length; i++) {
+      sum = sum + result[i].totalPrice;
+    }
     res.status(200).json({
       success: true,
       message: "Total price calculated successfully!",
-      data: result,
+      data: {
+        totalPrice: sum,
+      },
     });
   } catch (err) {
     res.status(404).json({
