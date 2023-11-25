@@ -7,5 +7,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/users/", UserRoutes);
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "app is running successfully",
+  });
+});
 
 export default app;
