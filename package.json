@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:prod": "node ./dist/server.js",
     "start": "nodemon ./dist/server.js",
+    "lint": "eslint src --ignore-path .eslintignore --ext .ts",
     "lint:fix": "npx eslint src --fix",
     "build": "tsc -w"
   },
