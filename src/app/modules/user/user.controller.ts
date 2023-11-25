@@ -70,7 +70,7 @@ const editUserController = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "User edited successfully!",
+      message: "User updated successfully!",
       data: result,
     });
   } catch (err) {
@@ -131,7 +131,9 @@ const allOrdersController = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Order fetched successfully!",
-      data: result,
+      data: {
+        orders: result.map((item) => item.orders),
+      },
     });
   } catch (err) {
     res.status(404).json({
