@@ -107,11 +107,11 @@ const deleteUserController = async (req: Request, res: Response) => {
 
 const addOrderController = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.addOrder(req.params.userId, req.body);
+    await userServices.addOrder(req.params.userId, req.body);
     res.status(200).json({
       success: true,
       message: "Order created successfully!",
-      data: result,
+      data: null,
     });
   } catch (err) {
     res.status(404).json({
@@ -127,11 +127,11 @@ const addOrderController = async (req: Request, res: Response) => {
 
 const allOrdersController = async (req: Request, res: Response) => {
   try {
-    await userServices.getOrders(req.params.userId);
+    const result = await userServices.getOrders(req.params.userId);
     res.status(200).json({
       success: true,
       message: "Order fetched successfully!",
-      data: null,
+      data: result,
     });
   } catch (err) {
     res.status(404).json({

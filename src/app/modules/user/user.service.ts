@@ -64,8 +64,9 @@ const addOrder = async (id: string, order: TOrders) => {
   }
 
   const result = await User.findOne({ userId: Number(id) });
+  console.log(order);
   result?.orders.push(order);
-  result?.save();
+  await result?.save();
   return result;
 };
 
